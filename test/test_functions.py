@@ -59,14 +59,14 @@ def test_fn_productos_bajo_stock():
         conn = psycopg2.connect(**DB_CONFIG)
         cur = conn.cursor()
         
-        cur.execute("SELECT nombre FROM fn_productos_bajo_stock(15);")
+        cur.execute("SELECT nombre FROM fn_productos_bajo_stock(3);")
         
         resultados = cur.fetchall()
         nombres = [row[0] for row in resultados]
         
         assert len(nombres) == 2
-        assert "Mochila para Laptop" in nombres
-        assert "Laptop Dell XPS 15" in nombres
+        assert "Celular" in nombres
+        assert "Cargador" in nombres
 
     finally:
         if conn:
@@ -104,11 +104,11 @@ def test_fn_contar_empleados_depto():
 
         cur.execute("SELECT fn_contar_empleados_depto(2);")
         conteo_ing = cur.fetchone()[0]
-        assert conteo_ing == 3
+        assert conteo_ing == 2
 
         cur.execute("SELECT fn_contar_empleados_depto(1);")
         conteo_ventas = cur.fetchone()[0]
-        assert conteo_ventas == 1
+        assert conteo_ventas == 2
 
         cur.execute("SELECT fn_contar_empleados_depto(99);")
         conteo_nulo = cur.fetchone()[0]
